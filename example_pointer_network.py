@@ -12,18 +12,28 @@ import tensorflow as tf
 #np.set_printoptions(threshold=np.nan)
 
 
-def generate_nested_sequence(length, min_seglen=5, max_seglen=10):
-    """Generate low-high-low sequence, with indexes of the first/last high/middle elements"""
+# def generate_nested_sequence(length, min_seglen=5, max_seglen=10):
+#     """Generate low-high-low sequence, with indexes of the first/last high/middle elements"""
 
-    # Low (1-5) vs. High (6-10)
-    seq_before = [(random.randint(1,5)) for x in range(random.randint(min_seglen, max_seglen))]
-    seq_during = [(random.randint(6,10)) for x in range(random.randint(min_seglen, max_seglen))]
-    seq_after = [random.randint(1,5) for x in range(random.randint(min_seglen, max_seglen))]
-    seq = seq_before + seq_during + seq_after
+#     # Low (1-5) vs. High (6-10)
+#     seq_before = [(random.randint(1,5)) for x in range(random.randint(min_seglen, max_seglen))]
+#     seq_during = [(random.randint(6,10)) for x in range(random.randint(min_seglen, max_seglen))]
+#     seq_after = [random.randint(1,5) for x in range(random.randint(min_seglen, max_seglen))]
+#     seq = seq_before + seq_during + seq_after
 
-    # Pad it up to max len with 0's
+#     # Pad it up to max len with 0's
+#     seq = seq + ([0] * (length - len(seq)))
+#     return [seq, len(seq_before), len(seq_before) + len(seq_during)-1]
+
+
+def generate_nested_sequence(length, min_seglen=5, max_seglen=10):  # HARDCODING VALUES!!!  
+    city = "-" + randomword(8) + "-"
+    seq = "I want to go to " + city + ". I have a conference there ."
+    seq = seq.split()
     seq = seq + ([0] * (length - len(seq)))
-    return [seq, len(seq_before), len(seq_before) + len(seq_during)-1]
+    pointer1 = 5
+    pointer2 = 6
+    return [seq, pointer1, pointer2]
 
 
 def create_one_hot(length, index):
@@ -214,7 +224,7 @@ def evaluate(max_length,         # J
         for batch_index in range(batch_size):
             data = generate_nested_sequence(max_length,
                                             training_segment_lengths[0],
-                                            training_segment_lengths[1])
+                                            training_segment_lengths[1])   # currently HARDCODING values!!!!
             sequences.append(data[0])                                           # J
             first_indexes.append(create_one_hot(input_length, data[1]))         # J
             second_indexes.append(create_one_hot(input_length, data[2]))        # J
