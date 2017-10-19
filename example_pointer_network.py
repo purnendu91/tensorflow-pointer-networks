@@ -3,6 +3,7 @@
 import math
 import numpy as np
 import random
+import string
 import sys
 import tensorflow as tf
 
@@ -25,6 +26,9 @@ import tensorflow as tf
 #     seq = seq + ([0] * (length - len(seq)))
 #     return [seq, len(seq_before), len(seq_before) + len(seq_during)-1]
 
+def randomword(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
 
 def generate_nested_sequence(length, min_seglen=5, max_seglen=10):  # HARDCODING VALUES!!!  
     city = "-" + randomword(8) + "-"
